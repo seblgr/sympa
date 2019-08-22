@@ -46,8 +46,8 @@ workflow of Sympa.  For more details see documentation on each class.
                      +-> [DoMessage]          /
                                \             /---> [ToHeld] => Held
           *3 (CONFIRM)          +-> [AuthorizeMessage]
-          :                    /      :      \---> [ToModeration] => Mod.
-          v                   /     Topic     \
+          :                    /             \---> [ToModeration] => Mod.
+          v                   /               \
  Held => [ProcessHeld] ------+                 \
                                                 +-> [DistributeMessage]
             *3 (DISTRIBUTE)                    /           \
@@ -61,24 +61,22 @@ workflow of Sympa.  For more details see documentation on each class.
                        +-------------------------------------------+
                         \
                         [TransformIncoming]
-                          \        :
-                           \     Topic
- <<wwsympa.fcgi>>           \
+ <<wwsympa.fcgi>>         \
                         [ToArchive] => Archive
- (list archive)               \
+ (list archive)             \
   => [ResendArchive] -- [TransformOutgoing] -+
-                                \             \
+                              \               \
                         [ToDigest] => Digest   \
-                                  \             \
-                                   +-------------+-> [ToList] => Outgoing
-                                                           :
-                            +-> [TransformDigestFinal]    Topic
-                           /                 \
- <<Template sending>>     /         +------> [ToOutgoing] => Outgoing
+                                \               \
+                                 +---------------+-> [ToList] => Outgoing
+ 
+                            +-> [TransformDigestFinal]  
+                           /                     \
+ <<Template sending>>     /         +----------> [ToOutgoing] => Outgoing 
                          /         / 
- (mail template) => [ProcessTemplate] -----> [ToListmaster] => Listmaster
+ (mail template) => [ProcessTemplate] ---------> [ToAlarm] => Alarm
                        /           \
-                       ^            +------> [ToMailer] => (Mailer)
+                       ^            +----------> [ToMailer] => (Mailer)
                        |
                        *1
 
@@ -118,9 +116,14 @@ Spool class.  Prefix C<Sympa::Spool::> is omitted.
 
 =over
 
+=item C<Alarm>
+
+=item C<Outgoing>
+
 =item C<Tracking>
 
-L<Sympa::Tracking> class
+L<Sympa::Alarm>, L<Sympa::Bulk> and L<Sympa::Tracking> classes
+(they are named such by historical reason).
 
 =back
 

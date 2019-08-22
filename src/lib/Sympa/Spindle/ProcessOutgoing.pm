@@ -8,8 +8,8 @@
 # Copyright (c) 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005,
 # 2006, 2007, 2008, 2009, 2010, 2011 Comite Reseau des Universites
 # Copyright (c) 2011, 2012, 2013, 2014, 2015, 2016, 2017 GIP RENATER
-# Copyright 2017, 2019 The Sympa Community. See the AUTHORS.md file at
-# the top-level directory of this distribution and at
+# Copyright 2017 The Sympa Community. See the AUTHORS.md file at the top-level
+# directory of this distribution and at
 # <https://github.com/sympa-community/sympa.git>.
 #
 # This program is free software; you can redistribute it and/or modify
@@ -32,6 +32,7 @@ use warnings;
 use English qw(-no_match_vars);
 
 use Sympa;
+use Sympa::Alarm;
 use Conf;
 use Sympa::DatabaseManager;
 use Sympa::List;
@@ -39,7 +40,6 @@ use Sympa::Log;
 use Sympa::Mailer;
 use Sympa::Message::Template;
 use Sympa::Process;
-use Sympa::Spool::Listmaster;
 use Sympa::Tools::Data;
 use Sympa::Tools::DKIM;
 use Sympa::Tracking;
@@ -50,7 +50,7 @@ my $log     = Sympa::Log->instance;
 my $mailer  = Sympa::Mailer->instance;
 my $process = Sympa::Process->instance;
 
-use constant _distaff => 'Sympa::Spool::Outgoing';
+use constant _distaff => 'Sympa::Bulk';
 
 sub _init {
     my $self  = shift;
@@ -71,7 +71,7 @@ sub _init {
             : $Conf::Conf{'log_level'};
 
         # Process grouped notifications.
-        Sympa::Spool::Listmaster->instance->flush;
+        Sympa::Alarm->instance->flush;
 
         unless ($process->{detached}) {
             ;
@@ -528,14 +528,13 @@ See also L<Sympa::Spindle/"Properties">.
 
 =item {distaff}
 
-Instance of L<Sympa::Spool::Outgoing> class.
+Instance of L<Sympa::Bulk> class.
 
 =back
 
 =head1 SEE ALSO
 
-L<Sympa::Mailer>, L<Sympa::Message>, L<Sympa::Spindle>,
-L<Sympa::Spool::Outgoing>.
+L<Sympa::Bulk>, L<Sympa::Mailer>, L<Sympa::Message>, L<Sympa::Spindle>.
 
 =head1 HISTORY
 

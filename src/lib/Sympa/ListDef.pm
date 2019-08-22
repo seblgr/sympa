@@ -8,8 +8,8 @@
 # Copyright (c) 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005,
 # 2006, 2007, 2008, 2009, 2010, 2011 Comite Reseau des Universites
 # Copyright (c) 2011, 2012, 2013, 2014, 2015, 2016, 2017 GIP RENATER
-# Copyright 2017, 2018, 2019 The Sympa Community. See the AUTHORS.md file at
-# the top-level directory of this distribution and at
+# Copyright 2017, 2018 The Sympa Community. See the AUTHORS.md file at the
+# top-level directory of this distribution and at
 # <https://github.com/sympa-community/sympa.git>.
 #
 # This program is free software; you can redistribute it and/or modify
@@ -878,7 +878,7 @@ our %pinfo = (
         'gettext_id' => "email address protection method",
         'gettext_comment' =>
             'Idem spam_protection is provided but it can be used only for web archives. Access requires a cookie, and users must submit a small form in order to receive a cookie before browsing the archives. This blocks all robot, even google and co.',
-        'format'     => ['cookie', 'javascript', 'at', 'gecos', 'none'],
+        'format'     => ['cookie', 'javascript', 'at', 'none'],
         'occurrence' => '1',
         'default'    => {'conf' => 'web_archive_spam_protection'}
     },
@@ -1059,7 +1059,7 @@ our %pinfo = (
         'default' => {'conf' => 'remind_return_path'}
     },
 
-    ### Data sources page ###
+    ### Datasources page ###
 
     'inclusion_notification_feature' => {
         order   => 60.01,
@@ -1131,55 +1131,7 @@ our %pinfo = (
                 'field_type' => 'password',
                 'occurrence' => '0-1',
                 'length'     => 10
-            },
-            'timeout' => {
-                'order'        => 5,
-                'gettext_id'   => "idle timeout",
-                'gettext_unit' => 'seconds',
-                'format'       => '\d+',
-                'length'       => 6,
-                'default'      => 180,
-            },
-            'ssl_version' => {
-                'order'      => 6,
-                'gettext_id' => 'SSL version',
-                'format'     => [
-                    'ssl_any', 'sslv2',   'sslv3', 'tlsv1',
-                    'tlsv1_1', 'tlsv1_2', 'tlsv1_3'
-                ],
-                'synonym'    => {'tls' => 'tlsv1'},
-                'occurrence' => '0-1',
-                'default'    => 'ssl_any',
-            },
-            'ssl_ciphers' => {
-                'order'      => 7,
-                'gettext_id' => 'SSL ciphers used',
-                'format'     => '.+',
-                'default'    => 'ALL'
-            },
-            # ssl_cert # Use cert.pem in list directory
-            # ssl_key  # Use private_key in list directory
-
-            # NOTE: The default of ca_verify is "none" that is different from
-            #   include_ldap_query (required) or include_remote_sympa_list
-            #   (optional).
-            'ca_verify' => {
-                'order'      => 8,
-                'gettext_id' => 'Certificate verification',
-                'format'     => ['none', 'optional', 'required'],
-                'synonym'    => {'require' => 'required'},
-                'occurrence' => '0-1',
-                'default'    => 'none',
-            },
-            # ca_path # Not yet implemented
-            # ca_file # Not yet implemented
-
-            'nosync_time_ranges' => {
-                'order'      => 10,
-                'gettext_id' => "Time ranges when inclusion is not allowed",
-                format_s     => '$time_ranges',
-                'occurrence' => '0-1'
-            },
+            }
         },
         'occurrence' => '0-n'
     },
@@ -1216,12 +1168,6 @@ our %pinfo = (
                 'gettext_id' => "filter definition",
                 'format'     => '.*'
             },
-            'nosync_time_ranges' => {
-                'order'      => 4,
-                'gettext_id' => "Time ranges when inclusion is not allowed",
-                format_s     => '$time_ranges',
-                'occurrence' => '0-1'
-            },
         },
         'occurrence' => '0-n'
     },
@@ -1239,105 +1185,33 @@ our %pinfo = (
                 'format'     => '.+',
                 'length'     => 15
             },
-            'url' => {
-                'order'      => 2,
-                'gettext_id' => "data location URL",
-                'format'     => '.+',
-                'occurrence' => '0-1',    # Backward compat. <= 6.2.44
-                'length'     => 50
-            },
-            'user' => {
-                'order'      => 3,
-                'gettext_id' => "remote user",
-                'format'     => '.+',
-                'occurrence' => '0-1'
-            },
-            'passwd' => {
-                'order'      => 4,
-                'gettext_id' => "remote password",
-                'format'     => '.+',
-                'field_type' => 'password',
-                'occurrence' => '0-1',
-                'length'     => 10,
-            },
             'host' => {
-                'order'           => 4.5,
-                'gettext_id'      => "remote host",
-                'gettext_comment' => 'obsoleted.  Use "data location URL".',
-                format_s          => '$host',
-                'occurrence'      => '1'
+                'order'      => 1.5,
+                'gettext_id' => "remote host",
+                format_s     => '$host',
+                'occurrence' => '1'
             },
             'port' => {
-                'order'           => 4.6,
-                'gettext_id'      => "remote port",
-                'gettext_comment' => 'obsoleted.  Use "data location URL".',
-                'format'          => '\d+',
-                'default'         => 443,
-                'length'          => 4
+                'order'      => 2,
+                'gettext_id' => "remote port",
+                'format'     => '\d+',
+                'default'    => 443,
+                'length'     => 4
             },
             'path' => {
-                'order'           => 4.7,
-                'gettext_id'      => "remote path of sympa list dump",
-                'gettext_comment' => 'obsoleted.  Use "data location URL".',
-                'format'          => '\S+',
-                'occurrence'      => '1',
-                'length'          => 20
+                'order'      => 3,
+                'gettext_id' => "remote path of sympa list dump",
+                'format'     => '\S+',
+                'occurrence' => '1',
+                'length'     => 20
             },
             'cert' => {
-                'order' => 4.8,
+                'order' => 4,
                 'gettext_id' =>
                     "certificate for authentication by remote Sympa",
-                'format'   => ['robot', 'list'],
-                'default'  => 'list',
-                'obsolete' => 1,
-            },
-            'timeout' => {
-                'order'        => 5,
-                'gettext_id'   => "idle timeout",
-                'gettext_unit' => 'seconds',
-                'format'       => '\d+',
-                'length'       => 6,
-                'default'      => 180,
-            },
-            'ssl_version' => {
-                'order'      => 6,
-                'gettext_id' => 'SSL version',
-                'format'     => [
-                    'ssl_any', 'sslv2',   'sslv3', 'tlsv1',
-                    'tlsv1_1', 'tlsv1_2', 'tlsv1_3'
-                ],
-                'synonym'    => {'tls' => 'tlsv1'},
-                'occurrence' => '0-1',
-                'default'    => 'ssl_any',
-            },
-            'ssl_ciphers' => {
-                'order'      => 7,
-                'gettext_id' => 'SSL ciphers used',
-                'format'     => '.+',
-                'default'    => 'ALL'
-            },
-            # ssl_cert # Use cert.pem in list directory
-            # ssl_key  # Use private_key in list directory
-
-            # NOTE: The default of ca_verify is "none" that is different from
-            #   include_ldap_query (required) or include_remote_file (none).
-            'ca_verify' => {
-                'order'      => 8,
-                'gettext_id' => 'Certificate verification',
-                'format'     => ['none', 'optional', 'required'],
-                'synonym'    => {'require' => 'required'},
-                'occurrence' => '0-1',
-                'default'    => 'optional',
-            },
-            # ca_path # Not yet implemented
-            # ca_file # Not yet implemented
-
-            'nosync_time_ranges' => {
-                'order'      => 10,
-                'gettext_id' => "Time ranges when inclusion is not allowed",
-                format_s     => '$time_ranges',
-                'occurrence' => '0-1'
-            },
+                'format'  => ['robot', 'list'],
+                'default' => 'list'
+            }
         },
         'occurrence' => '0-n'
     },
@@ -1421,8 +1295,6 @@ our %pinfo = (
                 'format'     => '.+',
                 'default'    => 'ALL',
             },
-            # ssl_cert # Not yet implemented
-            # ssl_key # Not yet implemented
             'ca_verify' => {
                 'order'      => 2.8,
                 'gettext_id' => 'Certificate verification',
@@ -1431,22 +1303,18 @@ our %pinfo = (
                 'occurrence' => '1',
                 'default'    => 'required',
             },
-            # ca_path # Not yet implemented
-            # ca_file # Not yet implemented
-            'bind_dn' => {
+            'user' => {
                 'order'      => 3,
                 'gettext_id' => "remote user",
                 'format'     => '.+'
             },
-            'user'          => {obsolete => 'bind_dn'},
-            'bind_password' => {
+            'passwd' => {
                 'order'      => 3.5,
                 'gettext_id' => "remote password",
                 'format'     => '.+',
                 'field_type' => 'password',
                 'length'     => 10
             },
-            'passwd' => {obsolete => 'bind_password'},
             'suffix' => {
                 'order'      => 4,
                 'gettext_id' => "suffix",
@@ -1484,19 +1352,12 @@ our %pinfo = (
             'select' => {
                 'order'      => 9,
                 'gettext_id' => "selection (if multiple)",
-                'format'     => ['all', 'first', 'regex'],
+                'format'     => ['all', 'first'],
                 'occurrence' => '1',
                 'default'    => 'first'
             },
-            'regex' => {
-                'order'      => 10,
-                'gettext_id' => "regular expression",
-                'format'     => '.+',
-                'default'    => '',
-                'length'     => 50
-            },
             'nosync_time_ranges' => {
-                'order'      => 11,
+                'order'      => 10,
                 'gettext_id' => "Time ranges when inclusion is not allowed",
                 format_s     => '$time_ranges',
                 'occurrence' => '0-1'
@@ -1563,8 +1424,6 @@ our %pinfo = (
                 'format'     => '.+',
                 'default'    => 'ALL'
             },
-            # ssl_cert # Not yet implemented
-            # ssl_key # Not yet implemented
             'ca_verify' => {
                 'order'      => 2.8,
                 'gettext_id' => 'Certificate verification',
@@ -1573,22 +1432,18 @@ our %pinfo = (
                 'occurrence' => '1',
                 'default'    => 'required',
             },
-            # ca_path # Not yet implemented
-            # ca_file # Not yet implemented
-            'bind_dn' => {
+            'user' => {
                 'order'      => 3,
                 'gettext_id' => "remote user",
                 'format'     => '.+'
             },
-            'user'          => {obsolete => 'bind_dn'},
-            'bind_password' => {
+            'passwd' => {
                 'order'      => 3.5,
                 'gettext_id' => "remote password",
                 'format'     => '.+',
                 'field_type' => 'password',
                 'length'     => 10
             },
-            'passwd'  => {obsolete => 'bind_password'},
             'suffix1' => {
                 'order'      => 4,
                 'gettext_id' => "first-level suffix",
@@ -1712,14 +1567,13 @@ our %pinfo = (
                 'format'     => '\S+',
                 'occurrence' => '1'
             },
-            'db_host' => {
+            'host' => {
                 'order'      => 2,
                 'gettext_id' => "remote host",
                 format_s     => '$host',
                 # Not required for ODBC
                 # 'occurrence' => '1'
             },
-            'host'    => {obsolete => 'db_host'},
             'db_port' => {
                 'order'      => 3,
                 'gettext_id' => "database port",
@@ -1731,32 +1585,29 @@ our %pinfo = (
                 'format'     => '\S+',
                 'occurrence' => '1'
             },
-            'db_options' => {
+            'connect_options' => {
                 'order'      => 4,
                 'gettext_id' => "connection options",
                 'format'     => '.+'
             },
-            'connect_options' => {obsolete => 'db_options'},
-            'db_env'          => {
+            'db_env' => {
                 'order' => 5,
                 'gettext_id' =>
                     "environment variables for database connection",
                 'format' => '\w+\=\S+(;\w+\=\S+)*'
             },
-            'db_user' => {
+            'user' => {
                 'order'      => 6,
                 'gettext_id' => "remote user",
                 'format'     => '\S+',
                 'occurrence' => '1'
             },
-            'user'      => {obsolete => 'db_user'},
-            'db_passwd' => {
+            'passwd' => {
                 'order'      => 7,
                 'gettext_id' => "remote password",
                 'format'     => '.+',
                 'field_type' => 'password'
             },
-            'passwd'    => {obsolete => 'db_passwd'},
             'sql_query' => {
                 'order'      => 8,
                 'gettext_id' => "SQL query",
@@ -1859,8 +1710,6 @@ our %pinfo = (
                 'format'     => '.+',
                 'default'    => 'ALL'
             },
-            # ssl_cert # Not yet implemented
-            # ssl_key # Not yet implemented
             'ca_verify' => {
                 'order'      => 2.8,
                 'gettext_id' => 'Certificate verification',
@@ -1869,22 +1718,18 @@ our %pinfo = (
                 'occurrence' => '1',
                 'default'    => 'required',
             },
-            # ca_path # Not yet implemented
-            # ca_file # Not yet implemented
-            'bind_dn' => {
+            'user' => {
                 'order'      => 3,
                 'gettext_id' => "remote user",
                 'format'     => '.+'
             },
-            'user'          => {obsolete => 'bind_dn'},
-            'bind_password' => {
+            'passwd' => {
                 'order'      => 3.5,
                 'gettext_id' => "remote password",
                 'format'     => '.+',
                 'field_type' => 'password',
                 'length'     => 10
             },
-            'passwd' => {obsolete => 'bind_password'},
             'suffix' => {
                 'order'      => 4,
                 'gettext_id' => "suffix",
@@ -1928,19 +1773,12 @@ our %pinfo = (
             'select' => {
                 'order'      => 10,
                 'gettext_id' => "selection (if multiple)",
-                'format'     => ['all', 'first', 'regex'],
+                'format'     => ['all', 'first'],
                 'occurrence' => '1',
                 'default'    => 'first'
             },
-            'regex' => {
-                'order'      => 11,
-                'gettext_id' => "regular expression",
-                'format'     => '.+',
-                'default'    => '',
-                'length'     => 50
-            },
             'nosync_time_ranges' => {
-                'order'      => 12,
+                'order'      => 11,
                 'gettext_id' => "Time ranges when inclusion is not allowed",
                 format_s     => '$time_ranges',
                 'occurrence' => '0-1'
@@ -2005,8 +1843,6 @@ our %pinfo = (
                 'format'     => '.+',
                 'default'    => 'ALL'
             },
-            # ssl_cert # Not yet implemented
-            # ssl_key # Not yet implemented
             'ca_verify' => {
                 'order'      => 2.8,
                 'gettext_id' => 'Certificate verification',
@@ -2015,22 +1851,18 @@ our %pinfo = (
                 'occurrence' => '1',
                 'default'    => 'required',
             },
-            # ca_path # Not yet implemented
-            # ca_file # Not yet implemented
-            'bind_dn' => {
+            'user' => {
                 'order'      => 3,
                 'gettext_id' => "remote user",
                 'format'     => '.+',
             },
-            'user'          => {obsolete => 'bind_dn'},
-            'bind_password' => {
+            'passwd' => {
                 'order'      => 3.5,
                 'gettext_id' => "remote password",
                 'format'     => '.+',
                 'field_type' => 'password',
                 'length'     => 10
             },
-            'passwd'  => {obsolete => 'bind_password'},
             'suffix1' => {
                 'order'      => 4,
                 'gettext_id' => "first-level suffix",
@@ -2159,14 +1991,13 @@ our %pinfo = (
                 'format'     => '\S+',
                 'occurrence' => '1'
             },
-            'db_host' => {
+            'host' => {
                 'order'      => 2,
                 'gettext_id' => "remote host",
                 format_s     => '$host',
                 # Not required for ODBC and SQLite. Optional for Oracle.
                 #'occurrence' => '1'
             },
-            'host'    => {obsolete => 'db_host'},
             'db_port' => {
                 'order'      => 3,
                 'gettext_id' => "database port",
@@ -2178,32 +2009,29 @@ our %pinfo = (
                 'format'     => '\S+',
                 'occurrence' => '1'
             },
-            'db_options' => {
+            'connect_options' => {
                 'order'      => 4.5,
                 'gettext_id' => "connection options",
                 'format'     => '.+'
             },
-            'connect_options' => {obsolete => 'db_options'},
-            'db_env'          => {
+            'db_env' => {
                 'order' => 5,
                 'gettext_id' =>
                     "environment variables for database connection",
                 'format' => '\w+\=\S+(;\w+\=\S+)*'
             },
-            'db_user' => {
+            'user' => {
                 'order'      => 6,
                 'gettext_id' => "remote user",
                 'format'     => '\S+',
                 'occurrence' => '1'
             },
-            'user'      => {obsolete => 'db_user'},
-            'db_passwd' => {
+            'passwd' => {
                 'order'      => 7,
                 'gettext_id' => "remote password",
                 'format'     => '.+',
                 'field_type' => 'password'
             },
-            'passwd'    => {options => 'db_passwd'},
             'sql_query' => {
                 'order'      => 8,
                 'gettext_id' => "SQL query",
@@ -2765,8 +2593,7 @@ our %user_info = (
                 internal   => 1,
             },
             included => {
-                #order      => 12,
-                obsolete   => 1,
+                order      => 12,
                 gettext_id => 'included',
                 format     => ['0', '1'],
                 occurrence => '1',
@@ -2774,8 +2601,7 @@ our %user_info = (
                 internal   => 1,
             },
             id => {
-                #order      => 13,
-                obsolete   => 1,
+                order      => 13,
                 gettext_id => 'name of external datasource',
                 internal   => 1,
             },
@@ -2787,22 +2613,8 @@ our %user_info = (
                 internal   => 1,
             },
             update_date => {
-                order      => 14.5,
+                order      => 15,
                 gettext_id => 'last update time',
-                format     => '\d+',
-                field_type => 'unixtime',
-                internal   => 1,
-            },
-            inclusion => {
-                order      => 14.6,
-                gettext_id => 'last inclusion time',
-                format     => '\d+',
-                field_type => 'unixtime',
-                internal   => 1,
-            },
-            inclusion_ext => {
-                order      => 14.7,
-                gettext_id => 'last inclusion time from external data source',
                 format     => '\d+',
                 field_type => 'unixtime',
                 internal   => 1,
@@ -2864,8 +2676,7 @@ our %user_info = (
                 internal   => 1,
             },
             included => {
-                #order      => 12,
-                obsolete   => 1,
+                order      => 12,
                 gettext_id => 'included',
                 format     => ['0', '1'],
                 occurrence => '1',
@@ -2873,8 +2684,7 @@ our %user_info = (
                 internal   => 1,
             },
             id => {
-                #order      => 13,
-                obsolete   => 1,
+                order      => 13,
                 gettext_id => 'name of external datasource',
                 internal   => 1,
             },
@@ -2886,22 +2696,8 @@ our %user_info = (
                 internal   => 1,
             },
             update_date => {
-                order      => 14.5,
+                order      => 15,
                 gettext_id => 'last update time',
-                format     => '\d+',
-                field_type => 'unixtime',
-                internal   => 1,
-            },
-            inclusion => {
-                order      => 14.6,
-                gettext_id => 'last inclusion time',
-                format     => '\d+',
-                field_type => 'unixtime',
-                internal   => 1,
-            },
-            inclusion_ext => {
-                order      => 14.7,
-                gettext_id => 'last inclusion time from external data source',
                 format     => '\d+',
                 field_type => 'unixtime',
                 internal   => 1,
@@ -2950,7 +2746,7 @@ sub cleanup {
         # Task format
         $v->{'format'} = Sympa::Regexps::task();
     } elsif ($v->{'datasource'}) {
-        # Data source format
+        # Datasource format
         $v->{'format'} = Sympa::Regexps::datasource();
     }
 
@@ -2993,8 +2789,7 @@ sub cleanup {
                 $v->{'format'}{$k}{format} = $format;
             } elsif ($v->{'format'}{$k}{'scenario'}) {
                 # Scenario format
-                $v->{'format'}{$k}{'format'} =
-                    Sympa::Regexps::scenario_config();
+                $v->{'format'}{$k}{'format'} = Sympa::Regexps::scenario_config();
                 #XXX$v->{'format'}{$k}{'default'} = 'default'
                 #XXX    unless ($p eq 'web_archive' and $k eq 'access')
                 #XXX    or ($p eq 'archive' and $k eq 'web_access');
@@ -3002,7 +2797,7 @@ sub cleanup {
                 # Task format
                 $v->{'format'}{$k}{'format'} = Sympa::Regexps::task();
             } elsif ($v->{'format'}{$k}{'datasource'}) {
-                # Data source format
+                # Datasource format
                 $v->{'format'}{$k}{'format'} = Sympa::Regexps::datasource();
             }
         }

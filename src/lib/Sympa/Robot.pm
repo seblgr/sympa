@@ -56,8 +56,7 @@ our %listmaster_messages_stack;
 # Sympa::Mailer::send_message().
 # sub send_global_file($tpl, $who, $robot, $context, $options);
 
-# MOVED: Use Sympa::send_notify_to_listmaster() or
-# Sympa::Spool::Listmaster::flush().
+# MOVED: Use Sympa::send_notify_to_listmaster() or Sympa::Alarm::flush().
 # sub send_notify_to_listmaster($operation, $robot, $data, $checkstack, $purge);
 
 ## Is the user listmaster
@@ -228,7 +227,7 @@ sub load_topics {
                     'name'  => lc($1),
                     'order' => $index
                 };
-            } elsif ($line =~ /^([\w\.]+)\s+(.+\S)\s*$/) {
+            } elsif ($line =~ /^([\w\.]+)\s+(.+)\s*$/) {
                 next unless defined $topic->{'name'};
 
                 $topic->{$1} = $2;

@@ -254,7 +254,7 @@
                 <input type="hidden" name="action" value="edit_list" />
                 [% IF is_form_editable ~%]
                     <input class="MainMenuLinks" type="submit" name="action_edit_list"
-                           value="[%|loc%]Apply modifications[%END%]" />
+                           value="[%|loc%]Update[%END%]" />
                 [%~ END %]
             </fieldset>
         </form>
