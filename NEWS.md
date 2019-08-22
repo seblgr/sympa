@@ -1,5 +1,119 @@
 # Change Log
 
+## [6.2.45b.2](https://github.com/sympa-community/sympa/tree/6.2.45b.2) (2019-07-27)
+[Full Changelog](https://github.com/sympa-community/sympa/compare/6.2.45b.1...6.2.45b.2)
+
+**Fixed bugs:**
+
+- Fix crash of RC4 encrypted password notice. [\#706](https://github.com/sympa-community/sympa/pull/706) ([racke](https://github.com/racke))
+
+**Merged pull requests:**
+
+- More fix to \#516 [\#710](https://github.com/sympa-community/sympa/pull/710) ([ikedas](https://github.com/ikedas))
+
+## [6.2.45b.1](https://github.com/sympa-community/sympa/tree/6.2.45b.1) (2019-07-20)
+[Full Changelog](https://github.com/sympa-community/sympa/compare/6.2.44...6.2.45b.1)
+
+**Changes:**
+
+- Perl: From now on, Perl earlier than 5.10.1 will never be supported [\#620](https://github.com/sympa-community/sympa/issues/620).
+- Data sources: Codebase has entirely been rewritten. Some behavior will be changed [\#693](https://github.com/sympa-community/sympa/issues/693).
+
+**Implemented enhancements:**
+
+- Make it clear that a list is being moderated [\#636](https://github.com/sympa-community/sympa/issues/636)
+- Add « report as spam » button in archives [\#634](https://github.com/sympa-community/sympa/issues/634)
+- Make it clear on web interface that a list is being moderated [\#638](https://github.com/sympa-community/sympa/pull/638) ([ldidry](https://github.com/ldidry))
+
+**Fixed bugs:**
+
+- `stats` page generates entries in Apache error log [\#700](https://github.com/sympa-community/sympa/issues/700)
+- `web_tt2/info.tt2` generates some noise in Apache error log [\#688](https://github.com/sympa-community/sympa/issues/688)
+- Death of the `task_manager` process [\#681](https://github.com/sympa-community/sympa/issues/681)
+- Error in `web_tt2/subindex.tt2` [\#673](https://github.com/sympa-community/sympa/issues/673)
+- DMARC protection: "`p`" tag was not applied to subdomains [\#654](https://github.com/sympa-community/sympa/issues/654)
+- Missing path after installation [\#274](https://github.com/sympa-community/sympa/issues/274)
+- mtime of files like `.last_change.admin` were not updated [\#671](https://github.com/sympa-community/sympa/pull/671) ([ikedas](https://github.com/ikedas))
+
+**Merged pull requests:**
+
+- Drop support for Perl 5.8.x \(\#620\) [\#683](https://github.com/sympa-community/sympa/pull/683) ([ikedas](https://github.com/ikedas))
+- Fix tidying of `src/lib/Sympa/List.pm` [\#677](https://github.com/sympa-community/sympa/pull/677) ([ldidry](https://github.com/ldidry))
+- Improving data sources [\#516](https://github.com/sympa-community/sympa/pull/516) [\#680](https://github.com/sympa-community/sympa/pull/680) ([ikedas](https://github.com/ikedas))
+
+## [6.2.44](https://github.com/sympa-community/sympa/tree/6.2.44)
+
+[Full Changelog](https://github.com/sympa-community/sympa/compare/6.2.43b.2...6.2.44)
+
+**Changes** (since 6.2.42) **:**
+
+- Indentation of web templates are corrected [\#582](https://github.com/sympa-community/sympa/pull/582), [\#592](https://github.com/sympa-community/sympa/pull/592). Though this change will not affect functionality, administrators might have to apply their customization to the new templates again.
+- WWSympa: TLS client authentication: Now it gets rfc822Name in X.509v3 subjectAltName, otherwise emailAddress attribute in subject DN [\#571](https://github.com/sympa-community/sympa/pull/571). Note that earlier efforts getting attribute such as MAIL, Email in subject DN are no longer supported.
+- ARC: Now Mail-DKIM 0.55 or better is required for ARC support.
+- WWSympa: Admin function to bulk unsubscribe which has been provided by 6.1.x was restored [\#27](https://github.com/sympa-community/sympa/issues/27).
+
+**Fixed bugs:**
+
+- "Use of uninitialized value $salt" on `--import` [\#656](https://github.com/sympa-community/sympa/issues/656)
+- Improve handling of missing `sympa/web_tt2` during upgrade [\#652](https://github.com/sympa-community/sympa/issues/652)
+
+**Merged pull requests:**
+
+- Support Test::Compile 2.0.0 [\#664](https://github.com/sympa-community/sympa/pull/664) ([ikedas](https://github.com/ikedas))
+- Remove all unneeded files from foundation-icons directory [\#649](https://github.com/sympa-community/sympa/pull/649) ([xavierba](https://github.com/xavierba))
+
+## [6.2.43b.2](https://github.com/sympa-community/sympa/tree/6.2.43b.2)
+
+[Full Changelog](https://github.com/sympa-community/sympa/compare/6.2.43b.1...6.2.43b.2)
+
+**Implemented enhancements:**
+
+- Hide full email addresses in archives [\#621](https://github.com/sympa-community/sympa/issues/621)
+- Add a button for full export of subscribers [\#616](https://github.com/sympa-community/sympa/pull/616) ([ldidry](https://github.com/ldidry))
+- Prevent unnecessary DB access in `add_list_member` [\#615](https://github.com/sympa-community/sympa/pull/615) ([seblgr](https://github.com/seblgr))
+- Regression from 6.1: Missing admin function to bulk unsubscribe [\#27](https://github.com/sympa-community/sympa/issues/27)
+
+**Fixed bugs:**
+
+- Exception when attempting to add myself to list after Shibboleth authentication [\#641](https://github.com/sympa-community/sympa/issues/641)
+- Archive not found when list renamed with capital letter [\#624](https://github.com/sympa-community/sympa/issues/624)
+- Edit message header/footer template links lost in 6.2.42? [\#622](https://github.com/sympa-community/sympa/issues/622)
+- Improving handling of boilerplate configuration  [\#609](https://github.com/sympa-community/sympa/issues/609)
+- Extra space at the end of line in topics.conf [\#581](https://github.com/sympa-community/sympa/issues/581)
+- Spurious MHonArc Search warnings for undefined search parameters [\#613](https://github.com/sympa-community/sympa/issues/613)
+- Regression from 6.1: Missing admin function to bulk unsubscribe [\#27](https://github.com/sympa-community/sympa/issues/27)
+
+## [6.2.43b.1](https://github.com/sympa-community/sympa/tree/6.2.43b.1)
+
+[Full Changelog](https://github.com/sympa-community/sympa/compare/6.2.42...6.2.43b.1)
+
+**Changes:**
+
+- Indentation of web templates are corrected [\#582](https://github.com/sympa-community/sympa/pull/582), [\#592](https://github.com/sympa-community/sympa/pull/592). Though this change will not affect functionality, administrators might have to apply their customization to the new templates again.
+- WWSympa: TLS client authentication: Now it gets rfc822Name in X.509v3 subjectAltName, otherwise emailAddress attribute in subject DN [\#571](https://github.com/sympa-community/sympa/pull/571). Note that earlier efforts getting attribute such as MAIL, Email in subject DN are no longer supported.
+- ARC: Now Mail-DKIM 0.55 or better is required for ARC support.
+
+**Implemented enhancements:**
+
+- Indentation of web templates are corrected [\#582](https://github.com/sympa-community/sympa/pull/582) ([ldidry](https://github.com/ldidry)), [\#592](https://github.com/sympa-community/sympa/pull/592) ([ikedas](https://github.com/ikedas))
+- Successive config files inconsistency [\#31](https://github.com/sympa-community/sympa/issues/31)
+- Add sympa.conf-dist [\#595](https://github.com/sympa-community/sympa/pull/595) ([ldidry](https://github.com/ldidry))
+- WWSympa: TLS client authentication: Get email from certificate according to S/MIME [\#571](https://github.com/sympa-community/sympa/pull/571) ([ikedas](https://github.com/ikedas))
+
+**Fixed bugs:**
+
+- Upgrading from 6.2.40 to 6.2.42 may break `sympa.conf`/`robot.conf` [\#578](https://github.com/sympa-community/sympa/issues/578)
+- No log entry when message is rejected via email [\#548](https://github.com/sympa-community/sympa/issues/548)
+- `Sympa::Aliases::Template` creates exclusive lock on local storage [\#593](https://github.com/sympa-community/sympa/pull/593), [\#602](https://github.com/sympa-community/sympa/pull/602) ([ikedas](https://github.com/ikedas))
+- `Sympa::Scenario::new()` was unable to load scenario filename including dots [\#589](https://github.com/sympa-community/sympa/pull/589) ([salaun-urennes1](https://github.com/salaun-urennes1))
+- `dkim_sign`: Normalize CRLF-\>LF for `DKIM-Signature` [\#588](https://github.com/sympa-community/sympa/pull/588) ([zmousm](https://github.com/zmousm))
+- Slight change in list admins cache expiry. [\#583](https://github.com/sympa-community/sympa/pull/583) ([dverdin](https://github.com/dverdin))
+- ARC: Comment in `Authentication-Results` field prevents check on srvid \(See \#575\) [\#585](https://github.com/sympa-community/sympa/pull/585) ([ikedas](https://github.com/ikedas))
+
+**Closed issues:**
+
+- `failed_to_create_web_session` [\#612](https://github.com/sympa-community/sympa/issues/612)
+
 ## [6.2.42](https://github.com/sympa-community/sympa/tree/6.2.42) (2019-03-20)
 
 [Full Changelog](https://github.com/sympa-community/sympa/compare/6.2.41b.2...6.2.42)
